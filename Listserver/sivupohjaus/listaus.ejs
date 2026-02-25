@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <title><%= otsikko %> - Listasovellus</title>
+</head>
+<body>
+    <h1><%= otsikko %></h1>
+
+    <% if(tiedot.length > 0) { %>
+        <ul>
+            <% for(let kohta of tiedot) { %>
+                <li><a href="<%= kohta.id %>"><%= kohta.nimi %></a></li>
+            <% } %>
+        </ul>
+    <% } else {%>
+        <p>Lista on tyhjä.</p>
+    <% } %>
+</body>
+</html>
