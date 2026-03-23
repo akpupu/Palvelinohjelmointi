@@ -1,0 +1,6 @@
+{
+  "host": "localhost",
+  "user": "root",
+  "database": "feedback_support",
+  "port": 3306
+}

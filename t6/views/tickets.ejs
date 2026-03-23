@@ -1,0 +1,23 @@
+<% layout('layout') %>
+
+<h2>Tukipyynnöt</h2>
+
+<table>
+  <tr>
+    <th>Status</th>
+    <th>ID</th>
+    <th>Saapunut</th>
+    <th>Asiakas</th>
+    <th>Kuvaus</th>
+  </tr>
+
+  <% for (const row of rows) { %>
+    <tr>
+      <td><%= row.status %></td>
+      <td><%= row.id %></td>
+      <td><%= row.created_at %></td>
+      <td><%= row.company_name %></td>
+      <td><%= row.description %></td>
+    </tr>
+  <% } %>
+</table>

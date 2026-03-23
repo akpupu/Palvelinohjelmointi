@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Feedback</title>
+</head>
+
+<body>
+
+<!-- 🔹 NAVIGAATIO (TÄRKEÄ) -->
+<nav>
+  <a href="/customers">Asiakkaat ja käyttäjät</a> |
+  <a href="/tickets">Tukipyynnöt</a> |
+  <a href="/feedback">Palaute</a>
+</nav>
+
+<h2>Palaute</h2>
+
+<table border="1">
+  <tr>
+    <th>Date</th>
+    <th>From</th>
+    <th>Feedback</th>
+  </tr>
+
+  <% for (const row of rows) { %>
+    <tr>
+      <td><%= row.arrived %></td>
+      <td>
+        <%= row.guest_name %> (<%= row.guest_email %>)
+      </td>
+      <td><%= row.feedback %></td>
+    </tr>
+  <% } %>
+
+</table>
+
+</body>
+</html>
