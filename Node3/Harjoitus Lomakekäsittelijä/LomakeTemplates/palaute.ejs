@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Palaute</title>
+  </head>
+  <body>
+    <h1>Palautelomake</h1>
+
+    <form action="/palaute" method="post">
+      <div>
+        <label for="nimi">Nimi:</label>
+        <input type="text" id="nimi" name="nimi" required />
+      </div>
+
+      <div>
+        <label for="sahkoposti">Sähköposti:</label>
+        <input type="email" id="sahkoposti" name="sahkoposti" required />
+      </div>
+
+      <div>
+        <label for="palaute">Palaute:</label>
+        <textarea id="palaute" name="palaute" required></textarea>
+      </div>
+
+      <button type="submit">Lähetä</button>
+    </form>
+  </body>
+</html>
