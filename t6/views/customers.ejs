@@ -1,8 +1,23 @@
-<% layout('layout') %>
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Asiakkaat ja käyttäjät</title>
+</head>
+
+<body>
+
+<nav>
+  <a href="/customers">Asiakkaat ja käyttäjät</a> |
+  <a href="/tickets">Tukipyynnöt</a> |
+  <a href="/feedback">Palaute</a>
+</nav>
+
+<hr />
 
 <h2>Asiakkaat ja käyttäjät</h2>
 
-<table>
+<table border="1">
   <tr>
     <th>Yritys</th>
     <th>ID</th>
@@ -21,3 +36,6 @@
     </tr>
   <% } %>
 </table>
+
+</body>
+</html>

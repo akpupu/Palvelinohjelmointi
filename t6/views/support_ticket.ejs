@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="fi">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Tukipyyntö #<%= ticket.id %></title>
+    <style>
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.6;
+        color: #333;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f4f7f6;
+      }
+      nav {
+        background: #fff;
+        padding: 10px;
+        border-radius: 8px;
+        margin-bottom: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+      nav a {
+        text-decoration: none;
+        color: #007bff;
+        margin-right: 15px;
+        font-weight: bold;
+      }
+      .ticket-container {
+        background: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .header {
+        border-bottom: 2px solid #eee;
+        padding-bottom: 15px;
+        margin-bottom: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+      .status-form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        background: #f8f9fa;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+      }
+      .status-select {
+        padding: 8px;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        font-size: 0.9em;
+      }
+      .btn-save-status {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 8px 15px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: opacity 0.3s;
+      }
+      .btn-save-status:disabled {
+        background-color: #6c757d;
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+      .description-box {
+        background: #f9f9f9;
+        border-left: 5px solid #007bff;
+        padding: 15px;
+        margin-bottom: 30px;
+      }
+      .messages-history {
+        margin-top: 40px;
+      }
+      .message {
+        border: 1px solid #ddd;
+        padding: 15px;
+        border-radius: 8px;
+        margin-bottom: 15px;
+        position: relative;
+      }
+      /* Tyyli admin-vastauksille */
+      .message.admin {
+        border-left: 5px solid #28a745;
+        background-color: #f0fff4;
+      }
+      .message-meta {
+        font-size: 0.8em;
+        color: #666;
+        margin-bottom: 5px;
+      }
+      .reply-form {
+        margin-top: 40px;
+        border-top: 2px solid #eee;
+        padding-top: 20px;
+      }
+      textarea {
+        width: 100%;
+        height: 120px;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        resize: vertical;
+        box-sizing: border-box;
+        font-family: inherit;
+      }
+      .btn-submit {
+        background: #007bff;
+        color: white;
+        border: none;
+        padding: 12px 25px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        margin-top: 10px;
+      }
+      .btn-submit:hover {
+        background: #0056b3;
+      }
+      .back-link {
+        display: inline-block;
+        margin-top: 20px;
+        color: #666;
+        text-decoration: none;
+      }
+    </style>
+  </head>
+  <body>
+    <nav>
+      <a href="/customers">Asiakkaat ja käyttäjät</a>
+      <a href="/tickets">Tukipyynnöt</a>
+      <a href="/feedback">Palaute</a>
+    </nav>
+
+    <div class="ticket-container">
+      <div class="header">
+        <h1>Tukipyyntö #<%= ticket.id %></h1>
+        
+        <form action="/update-ticket/<%= ticket.id %>" method="POST" class="status-form">
+          <label for="status-select"><strong>Tila:</strong></label>
+          <select name="status" id="status-select" class="status-select" onchange="handleStatusChange()">
+            <option value="1" <%= ticket.status == 1 ? 'selected' : '' %>>Avoin</option>
+            <option value="2" <%= ticket.status == 2 ? 'selected' : '' %>>Käsittelyssä</option>
+            <option value="3" <%= ticket.status == 3 ? 'selected' : '' %>>Odottaa asiakasta</option>
+            <option value="4" <%= ticket.status == 4 ? 'selected' : '' %>>Suljettu (Closed)</option>
+          </select>
+          <button type="submit" id="save-status-btn" class="btn-save-status" disabled>Tallenna</button>
+        </form>
+      </div>
+
+      <div class="description-box">
+        <h3>Aihe: <%= ticket.subject || 'Ei aihetta' %></h3>
+        <p><%= ticket.description || 'Ei kuvausta saatavilla.' %></p>
+      </div>
+
+      <div class="messages-history">
+        <h3>Viestiketju</h3>
+
+        <!-- Luupataan läpi kaikki viestit tietokannasta -->
+        <% if (locals.messages && messages.length > 0) { %>
+          <% messages.forEach(msg => { %>
+            <div class="message <%= msg.is_admin ? 'admin' : '' %>">
+              <div class="message-meta">
+                <strong><%= msg.sender_name || (msg.is_admin ? 'Ylläpitäjä' : 'Käyttäjä') %></strong> 
+                - <%= msg.created_at ? new Date(msg.created_at).toLocaleString('fi-FI') : '' %>
+              </div>
+              <p><%= msg.message %></p>
+            </div>
+          <% }) %>
+        <% } else { %>
+          <p>Ei vielä vastauksia tässä ketjussa.</p>
+        <% } %>
+      </div>
+
+      <div class="reply-form">
+        <h3>Vastaa viestiin</h3>
+        <form action="/add_reply" method="POST">
+          <input type="hidden" name="ticket_id" value="<%= ticket.id %>" />
+          <textarea
+            name="message"
+            placeholder="Kirjoita vastaus ylläpitäjänä..."
+            required
+          ></textarea>
+          <br />
+          <button type="submit" class="btn-submit">Vastaa</button>
+        </form>
+      </div>
+
+      <a href="/tickets" class="back-link">← Takaisin tukipyyntölistaan</a>
+    </div>
+
+    <script>
+      function handleStatusChange() {
+        const saveBtn = document.getElementById('save-status-btn');
+        saveBtn.disabled = false;
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+ALTER TABLE customer 
+ADD COLUMN password VARCHAR(255) NOT NULL DEFAULT '$2b$10$ExRgz7noW98.CHmN6u9JDeS9Bv0q.6uVv5f/r9v8pBvG2xYp2G2iG';
+
+
+UPDATE customer 
+SET password = '$2b$10$7vI6VunlS9.vBvG2xYp2G.mY1IuKjI5KzN5vH5O6P7Q8R9S0T1U2V' 
+WHERE id = 1;
+
+ALTER TABLE system_user 
+ADD COLUMN IF NOT EXISTS password VARCHAR(255) AFTER email;
+
+
+UPDATE system_user 
+SET password = '$2b$10$ExRgz7noW98.CHmN6u9JDeS9Bv0q.6uVv5f/r9v8pBvG2xYp2G2iG' 
+WHERE id = 1;

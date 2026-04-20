@@ -1,23 +1,67 @@
-<% layout('layout') %>
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8" />
+  <title>Tukipyynnöt</title>
+  <style>
+    /* Lisätty vähän tyyliä, jotta linkki näyttää painikkeelta */
+    .btn-view {
+      background-color: #f0f0f0;
+      padding: 2px 8px;
+      border: 1px solid #ccc;
+      text-decoration: none;
+      color: black;
+      font-size: 0.9em;
+    }
+    .btn-view:hover {
+      background-color: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="/customers">Asiakkaat ja käyttäjät</a> |
+  <a href="/tickets">Tukipyynnöt</a> |
+  <a href="/feedback">Palaute</a>
+</nav>
+
+<hr />
 
 <h2>Tukipyynnöt</h2>
 
-<table>
+<table border="1">
   <tr>
-    <th>Status</th>
     <th>ID</th>
-    <th>Saapunut</th>
-    <th>Asiakas</th>
     <th>Kuvaus</th>
+    <th>Toiminnot</th> <!-- Uusi sarake linkille -->
   </tr>
 
   <% for (const row of rows) { %>
     <tr>
-      <td><%= row.status %></td>
-      <td><%= row.id %></td>
-      <td><%= row.created_at %></td>
-      <td><%= row.company_name %></td>
-      <td><%= row.description %></td>
+      <td><%= row.id || row.ticket_id %></td>
+      <td><%= row.description || row.message %></td>
+      <td>
+        <!-- Tehtävän vihjeen mukainen linkki parametrilla -->
+        <a href="/support_ticket?id=<%= row.id || row.ticket_id %>" class="btn-view">
+          Avaa tiedot
+        </a>
+      </td>
     </tr>
   <% } %>
 </table>
+<script>
+  // Tarkistetaan onko osoiterivillä "success=true"
+  const urlParams = new URLSearchParams(window.location.search);
+  if (urlParams.get('success') === 'true') {
+    alert('Kiitos! Viestisi on lähetetty onnistuneesti.');
+    
+    // Siistitään osoiterivi poistamalla success-parametri (valinnainen)
+    const newUrl = window.location.pathname + '?id=' + urlParams.get('id');
+    window.history.replaceState({}, document.title, newUrl);
+  }
+</script>
+
+
+</body>
+</html>
