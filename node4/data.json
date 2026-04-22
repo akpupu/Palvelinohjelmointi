@@ -1,12 +1,1 @@
-[
-    {
-        "name": "Nimi",
-        "email": "email@domain.invalid",
-        "feedback": "Tässä on palautetta."
-    },
-    {
-        "name": "Nimi",
-        "email": "email@domain.invalid",
-        "feedback": "Toinen palaute."
-    }
-]
+[{"name":"Nimi","email":"email@domain.invalid","feedback":"Tässä on palautetta."},{"name":"Nimi","email":"email@domain.invalid","feedback":"Toinen palaute."},{"name":"AK","email":"eero.riila@gmail.com","feedback":"raa"}]

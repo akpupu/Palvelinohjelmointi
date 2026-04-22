@@ -1,0 +1,21 @@
+<%- include("partials/header") %>
+
+<div class="container">
+
+  <h2>Generation <%= numero %></h2>
+
+  <ul>
+    <% if (Array.isArray(sukupolvi)) { %>
+      <% sukupolvi.forEach(p => { %>
+        <li>
+          <a href="/pokemon/<%= p.name %>">
+            <%= p.name %>
+          </a>
+        </li>
+      <% }) %>
+    <% } %>
+  </ul>
+
+</div>
+
+<%- include("partials/footer") %>
