@@ -39,10 +39,20 @@ const getFeedback = async () => {
   }
 };
 
+// ✅ FIXED FUNCTION
 const getCustomers = async () => {
   const c = await getConnection();
   try {
-    const [rows] = await c.execute("SELECT * FROM customer");
+    const [rows] = await c.execute(`
+      SELECT
+        c.name AS company_name,
+        su.id AS user_id,
+        su.fullname,
+        su.email,
+        su.admin
+      FROM system_user su
+      LEFT JOIN customer c ON su.customer_id = c.id
+    `);
     return rows;
   } finally {
     c.release();
