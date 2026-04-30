@@ -7,14 +7,15 @@ const getConnection = async () => {
   return await pool.getConnection();
 };
 
-// 🔐 LOGIN
+// ONLY ADMINS
 const findAdminUser = async (identifier) => {
   const connection = await getConnection();
   try {
     const sql = `
       SELECT *
       FROM system_user
-      WHERE id = ? OR email = ?
+      WHERE (id = ? OR email = ?)
+      AND admin = 1
       LIMIT 1
     `;
     const [rows] = await connection.execute(sql, [
@@ -27,8 +28,6 @@ const findAdminUser = async (identifier) => {
   }
 };
 
-// --- KEEP REST AS IS ---
-
 const getFeedback = async () => {
   const c = await getConnection();
   try {
@@ -39,7 +38,6 @@ const getFeedback = async () => {
   }
 };
 
-// ✅ FIXED FUNCTION
 const getCustomers = async () => {
   const c = await getConnection();
   try {
@@ -86,7 +84,7 @@ const getTicketMessages = async (ticketId) => {
   const c = await getConnection();
   try {
     const sql = `
-      SELECT sm.*, u.fullname AS sender_name
+      SELECT sm.*, u.fullname AS sender_name, u.admin
       FROM support_message sm
       LEFT JOIN system_user u ON sm.from_user = u.id
       WHERE sm.ticket_id = ?
@@ -97,7 +95,7 @@ const getTicketMessages = async (ticketId) => {
     return rows.map((row) => ({
       ...row,
       message: row.body,
-      is_admin: true,
+      is_admin: row.admin === 1,
     }));
   } finally {
     c.release();

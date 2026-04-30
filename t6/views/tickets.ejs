@@ -1,67 +1,32 @@
-<!DOCTYPE html>
-<html lang="fi">
-<head>
-  <meta charset="UTF-8" />
-  <title>Tukipyynnöt</title>
-  <style>
-    /* Lisätty vähän tyyliä, jotta linkki näyttää painikkeelta */
-    .btn-view {
-      background-color: #f0f0f0;
-      padding: 2px 8px;
-      border: 1px solid #ccc;
-      text-decoration: none;
-      color: black;
-      font-size: 0.9em;
-    }
-    .btn-view:hover {
-      background-color: #e0e0e0;
-    }
-  </style>
-</head>
-<body>
-
-<nav>
-  <a href="/customers">Asiakkaat ja käyttäjät</a> |
-  <a href="/tickets">Tukipyynnöt</a> |
-  <a href="/feedback">Palaute</a>
-</nav>
-
-<hr />
-
-<h2>Tukipyynnöt</h2>
-
 <table border="1">
   <tr>
     <th>ID</th>
+    <th>Asiakas</th> <!-- Uusi sarake -->
     <th>Kuvaus</th>
-    <th>Toiminnot</th> <!-- Uusi sarake linkille -->
+    <th>Tila</th>
+    <th>Luotu</th>
+    <th>Toiminnot</th>
   </tr>
 
   <% for (const row of rows) { %>
     <tr>
-      <td><%= row.id || row.ticket_id %></td>
-      <td><%= row.description || row.message %></td>
+      <td><%= row.id %></td>
+      <td><%= row.customer_id %></td> <!-- Lisää tämä -->
+      <td><%= row.description %></td>
       <td>
-        <!-- Tehtävän vihjeen mukainen linkki parametrilla -->
-        <a href="/support_ticket?id=<%= row.id || row.ticket_id %>" class="btn-view">
-          Avaa tiedot
-        </a>
+        <% if (row.status == 1) { %> Avoin <% } 
+           else if (row.status == 2) { %> Käsittelyssä <% } 
+           else if (row.status == 3) { %> Odottaa <% } 
+           else if (row.status == 4) { %> Suljettu <% } 
+           else { %> <%= row.status %> <% } %>
+      </td>
+      <!-- Jos 'created_at' ei toimi, kokeile sarakkeen nimeä 'pvm' tai 'date' -->
+      <!-- Esimerkki: jos sarakkeen nimi on 'created' -->
+<td><%= row.created ? new Date(row.created).toLocaleString('fi-FI') : '---' %></td>
+
+      <td>
+        <a href="/support_ticket?id=<%= row.id %>" class="btn-view">Avaa tiedot</a>
       </td>
     </tr>
   <% } %>
 </table>
-<script>
-  // Tarkistetaan onko osoiterivillä "success=true"
-  const urlParams = new URLSearchParams(window.location.search);
-  if (urlParams.get('success') === 'true') {
-    alert('Kiitos! Viestisi on lähetetty onnistuneesti.');
-    
-    // Siistitään osoiterivi poistamalla success-parametri (valinnainen)
-    const newUrl = window.location.pathname + '?id=' + urlParams.get('id');
-    window.history.replaceState({}, document.title, newUrl);
-  }
-</script>
-
-
-</body>
-</html>
