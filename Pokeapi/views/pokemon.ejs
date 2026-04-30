@@ -1,33 +1,53 @@
 <%- include("partials/header") %>
 
 <% 
-  // Haetaan päätyyppi teemaa varten
   const mainType = pokemon.types[0].type.name; 
 %>
 
-<div class="pokemon-card theme-<%= mainType %>">
+<div class="container theme-<%= mainType %>">
   
-  <div class="card-header">
-    <h2 class="pokemon-name">
-      <%= pokemon.name.charAt(0).toUpperCase() + pokemon.name.slice(1) %>
-    </h2>
-    <span class="hp-text">HP <%= pokemon.stats[0].base_stat %></span>
+  <div class="pokemon-card">
+    <!-- Kuva -->
+    <div class="img-wrapper">
+      <img
+        class="pokemon-img"
+        src="<%= pokemon.sprites?.other['official-artwork'].front_default || pokemon.sprites?.front_default %>"
+        alt="<%= pokemon.name %>"
+      />
+    </div>
+
+    <!-- Tiedot kuvan viereen -->
+    <div class="info-side">
+      <h2 style="font-family: 'Orbitron'; font-size: 2.5rem; text-transform: uppercase; margin: 0;">
+        <%= pokemon.name %>
+      </h2>
+
+      <div class="type-container">
+        <h3 style="font-family: 'Orbitron';">Types</h3>
+        <% pokemon.types.forEach(t => { %>
+          <span class="type-badge"><%= t.type.name %></span>
+        <% }) %>
+      </div>
+
+      <div class="stats-container">
+        <h3 style="font-family: 'Orbitron';">Stats</h3>
+        <ul style="list-style: none; padding: 0;">
+          <% pokemon.stats.forEach(s => { %>
+            <li style="margin: 5px 0; font-size: 1.1rem;">
+              <strong><%= s.stat.name.replace('-', ' ') %>:</strong> <%= s.base_stat %>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
   </div>
 
-  <div class="img-wrapper">
-    <img
-      class="pokemon-img"
-      src="<%= pokemon.sprites?.other['official-artwork'].front_default || pokemon.sprites?.front_default %>"
-      alt="<%= pokemon.name %>"
-    />
-  </div>
+</div>
+<div class="back-nav">
+  <a href="javascript:history.back()" class="back-btn">
+    <span class="arrow">&lt;</span> back
+  </a>
+</div>
 
-  <div class="type-container">
-    <% pokemon.types.forEach(t => { %>
-      <span class="badge type-<%= t.type.name %>"><%= t.type.name %></span>
-    <% }) %>
-  </div>
-
- 
 
 <%- include("partials/footer") %>

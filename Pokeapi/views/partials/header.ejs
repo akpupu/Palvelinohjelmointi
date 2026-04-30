@@ -2,16 +2,28 @@
 <html lang="fi">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Pokédex</title>
-    <link rel="stylesheet" href="/styles/styles.css" />
+    <!-- Google Fonts futuristista tyyliä varten -->
+    <link href="https://googleapis.com" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
   </head>
 
   <body>
     <header class="topbar">
-      <h1>Pokédex</h1>
+      <div class="logo-section">
+        <h1>Pokédex</h1>
+      </div>
 
       <nav>
-        <a href="/">Etusivu</a>
+        <a href="/" class="pokeball-home">
+          <div class="pokeball">
+            <div class="pokeball-top"></div>
+            <div class="pokeball-center"></div>
+            <div class="pokeball-bottom"></div>
+          </div>
+          <span class="nav-text">Etusivu</span>
+        </a>
       </nav>
 
       <!-- 🔍 SEARCH FORM -->
@@ -21,6 +33,6 @@
       </form>
     </header>
 
-    <hr />
+    <div class="header-line"></div>
   </body>
 </html>

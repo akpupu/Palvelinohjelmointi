@@ -1,0 +1,264 @@
+/* --- Futuristinen Perusilme --- */
+body {
+  background-color: #0a0a0c; /* Syvä tumma tausta */
+  color: #00f2ff; /* Neon-turkoosi teksti */
+  margin: 0;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 40px;
+  background: rgba(255, 255, 255, 0.05); /* Läpinäkyvä valkoinen */
+  backdrop-filter: blur(10px); /* Lasiefekti */
+  border-bottom: 2px solid #00f2ff;
+  box-shadow: 0 0 15px rgba(0, 242, 255, 0.3);
+  font-family: "Orbitron", sans-serif;
+}
+
+.topbar h1 {
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  color: #00f2ff;
+  text-shadow: 0 0 10px rgba(0, 242, 255, 0.7);
+  margin: 0;
+}
+
+/* --- Poképallo Etusivu-nappi --- */
+.pokeball-home {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  gap: 5px;
+  transition: 0.3s;
+}
+
+.pokeball {
+  width: 45px;
+  height: 45px;
+  background-color: white;
+  border: 2px solid #111;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  box-shadow: 0 0 10px rgba(0, 242, 255, 0.2);
+}
+
+.pokeball-top {
+  width: 100%;
+  height: 50%;
+  background-color: #ff1c1c;
+  border-bottom: 2px solid #111;
+}
+
+.pokeball-center {
+  width: 12px;
+  height: 12px;
+  background-color: white;
+  border: 2px solid #111;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+}
+
+.pokeball-center::after {
+  content: "";
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: #00f2ff;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 5px #00f2ff;
+}
+
+.pokeball-home span {
+  color: #00f2ff;
+  font-size: 11px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.pokeball-home:hover .pokeball {
+  transform: rotate(360deg) scale(1.1);
+  box-shadow: 0 0 20px #00f2ff;
+}
+
+/* --- Search Form --- */
+.search-form input {
+  background: transparent;
+  padding: 10px;
+  border: 1px solid #00f2ff !important;
+  border-radius: 0px !important;
+  color: white;
+  width: 150px;
+  transition: all 0.3s;
+  outline: none;
+}
+
+.search-form input:focus {
+  box-shadow: 0 0 15px #00f2ff;
+  width: 200px;
+}
+
+.search-form button {
+  padding: 8px 25px;
+  border: 1px solid #00f2ff !important;
+  background: #00f2ff !important;
+  color: #0a0a0c !important;
+  font-weight: 900;
+  text-transform: uppercase;
+  clip-path: polygon(10% 0, 100% 0, 90% 100%, 0 100%);
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.search-form button:hover {
+  background: white !important;
+  box-shadow: 0 0 20px white;
+}
+
+/* --- Sukupolvi-painikkeet & Grid --- */
+.container ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+  padding: 0;
+  list-style: none;
+  margin-top: 30px;
+}
+
+.container li a {
+  display: block;
+  min-width: 140px;
+  text-align: center;
+  padding: 15px 20px;
+  background: rgba(0, 242, 255, 0.05);
+  border: 1px solid #00f2ff;
+  color: #00f2ff;
+  text-decoration: none;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+  clip-path: polygon(0 0, 90% 0, 100% 30%, 100% 100%, 0 100%);
+}
+
+.container li a:hover {
+  background: #00f2ff;
+  color: #0a0a0c;
+  box-shadow: 0 0 20px rgba(0, 242, 255, 0.5);
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* --- Pokemon kortti / Container --- */
+.container {
+  background: rgba(20, 20, 25, 0.8);
+  border: 2px solid var(--theme-color, #00f2ff) !important;
+  box-shadow: 0 0 25px var(--theme-color, rgba(0, 242, 255, 0.2));
+  border-radius: 0px 30px 0px 30px;
+  color: white;
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 30px;
+  /* Lisätty: varmistaa ettei etusivun flex-asettelu hajoa */
+  display: block;
+}
+
+/* Erillinen asettelu Pokémon-sivulle (Bulbasaur-näkymä) */
+.pokemon-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 50px;
+  margin-top: 20px;
+}
+
+.img-wrapper {
+  flex: 0 1 auto;
+}
+
+.pokemon-img {
+  max-width: 400px;
+  height: auto;
+  background: radial-gradient(
+    circle,
+    var(--theme-color, #00f2ff) 0%,
+    transparent 70%
+  );
+  filter: drop-shadow(0 0 20px var(--theme-color, #00f2ff));
+}
+
+.info-side {
+  flex: 0 1 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+.type-badge {
+  background: transparent;
+  border: 1px solid white;
+  font-family: monospace;
+  letter-spacing: 2px;
+  padding: 5px 15px;
+  margin: 5px;
+  display: inline-block;
+  text-transform: uppercase;
+}
+
+/* Mobiiliasettelu */
+@media (max-width: 768px) {
+  .pokemon-card {
+    flex-direction: column;
+    text-align: center;
+  }
+  .info-side {
+    text-align: center;
+  }
+}
+
+.back-nav {
+  max-width: 900px;
+  margin: 20px auto 0;
+  padding: 0 20px;
+}
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--theme-color, #00f2ff);
+  font-family: "Orbitron", sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.9rem;
+  padding: 10px 20px;
+  border: 1px solid var(--theme-color, #00f2ff);
+  background: rgba(0, 242, 255, 0.05);
+  clip-path: polygon(0 0, 100% 0, 90% 100%, 0 100%); /* Futuristinen leikkaus */
+  transition: all 0.3s ease;
+}
+
+.back-btn .arrow {
+  font-size: 1.2rem;
+}
+
+.back-btn:hover {
+  background: var(--theme-color, #00f2ff);
+  color: #0a0a0c;
+  box-shadow: 0 0 15px var(--theme-color, rgba(0, 242, 255, 0.5));
+  transform: translateX(-5px);
+}
