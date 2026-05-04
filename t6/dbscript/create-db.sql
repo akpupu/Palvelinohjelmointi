@@ -99,3 +99,4 @@ ALTER TABLE support_message
 ADD CONSTRAINT fk_message_user
     FOREIGN KEY (from_user)
     REFERENCES system_user (id);
+

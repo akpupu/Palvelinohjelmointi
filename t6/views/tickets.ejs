@@ -1,29 +1,22 @@
 <table border="1">
   <tr>
     <th>ID</th>
-    <th>Asiakas</th> <!-- Uusi sarake -->
+    <th>Asiakas</th>
     <th>Kuvaus</th>
     <th>Tila</th>
-    <th>Luotu</th>
+    <th>Saapunut</th>
+    <th>Käsitelty</th>
     <th>Toiminnot</th>
   </tr>
 
   <% for (const row of rows) { %>
     <tr>
       <td><%= row.id %></td>
-      <td><%= row.customer_id %></td> <!-- Lisää tämä -->
+      <td><%= row.customer_name || 'Ei asiakasta' %></td>
       <td><%= row.description %></td>
-      <td>
-        <% if (row.status == 1) { %> Avoin <% } 
-           else if (row.status == 2) { %> Käsittelyssä <% } 
-           else if (row.status == 3) { %> Odottaa <% } 
-           else if (row.status == 4) { %> Suljettu <% } 
-           else { %> <%= row.status %> <% } %>
-      </td>
-      <!-- Jos 'created_at' ei toimi, kokeile sarakkeen nimeä 'pvm' tai 'date' -->
-      <!-- Esimerkki: jos sarakkeen nimi on 'created' -->
-<td><%= row.created ? new Date(row.created).toLocaleString('fi-FI') : '---' %></td>
-
+      <td><%= row.status_text || 'Tuntematon tila' %></td>
+      <td><%= row.arrived ? new Date(row.arrived).toLocaleString('fi-FI') : '---' %></td>
+      <td><%= row.handled ? new Date(row.handled).toLocaleString('fi-FI') : 'Odottaa' %></td>
       <td>
         <a href="/support_ticket?id=<%= row.id %>" class="btn-view">Avaa tiedot</a>
       </td>
